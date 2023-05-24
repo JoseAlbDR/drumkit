@@ -20,8 +20,11 @@ const onkey = function (event) {
   // Get the instrument asociated with the key pressed
   allInstruments.forEach((instrument) => {
     if (instrument.textContent === event.key) {
-      playSound(instrument);
-      changeStyle(instrument);
+      if (event.type === "keyup") changeStyle(instrument);
+      else {
+        playSound(instrument);
+        changeStyle(instrument);
+      }
     }
   });
 };
@@ -44,7 +47,9 @@ set.onmousedown = function (event) {
 
 // Release click on instrument
 set.onmouseup = function (event) {
-  event.target.classList.remove("pressed");
+  if (event.target.classList.value.includes("set")) return;
+
+  changeStyle(event.target);
 };
 
 // Key pressed
