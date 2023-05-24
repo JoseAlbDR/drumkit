@@ -31,39 +31,14 @@ const onKey = function (event) {
 
 // Listeners
 const onMouse = function (event) {
-  // Get closest event parent with set class
-  const parent = event.target.closest(".set");
+  // Guard clause
+  if (![...event.target.classList].includes("drum")) return;
 
-  // Return if the event is mousedown or clicked in parent (prevent propagation)
-  if (event.target === parent && event.type === "mousedown") return;
-
-  // If event is an instrument (includes drum class)
-  if ([...event.target.classList].includes("drum")) {
-    // If event type is mouse down
-    if (event.type === "mousedown") {
-      // Save instrument clicked
-      instrumentClicked = event.target;
-
-      // Play sound and change style
-      playSound(event.target);
-      changeStyle(event.target);
-
-      // If element type is not mousedown (mouseup in this case)
-    } else {
-      // Only change style and empty instrumentClicked
-      changeStyle(event.target);
-      instrumentClicked = "";
-    }
-
-    // If event is NOT an instrument
-  } else {
-    // If a instrument was clicked
-    if (instrumentClicked) {
-      // Only change style and empty instrumentClicked
-      changeStyle(instrumentClicked);
-      instrumentClicked = "";
-    }
-  }
+  // Save instrument clicked
+  instrumentClicked = event.target;
+  // Play sound and change style
+  playSound(event.target);
+  changeStyle(event.target);
 };
 
 // Click on instrument
@@ -72,8 +47,12 @@ set.onmousedown = function (event) {
 };
 
 // Release click on instrument
-window.onmouseup = function (event) {
-  onMouse(event);
+window.onmouseup = function () {
+  // If there is an instrument clicked
+  if (instrumentClicked) {
+    changeStyle(instrumentClicked);
+    instrumentClicked = "";
+  }
 };
 
 // Key pressed
