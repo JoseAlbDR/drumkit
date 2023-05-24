@@ -15,11 +15,14 @@ const changeStyle = function (item) {
 // Check what key is pressed
 const onKey = function (event) {
   const allInstruments = document.querySelectorAll(".drum");
+
+  // Return if the key pressed is not needed
   if (!["w", "a", "s", "d", "j", "k", "l"].includes(event.key)) return;
 
   // Get the instrument asociated with the key pressed
   allInstruments.forEach((instrument) => {
     if (instrument.textContent === event.key) {
+      // If the event is keyup only change style, dont play sound
       if (event.type === "keyup") changeStyle(instrument);
       else {
         playSound(instrument);
