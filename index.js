@@ -1,6 +1,7 @@
 // Parent element
 const set = document.querySelector(".set");
 let instrumentClicked = "";
+
 // Play the sound file with the dataset intrument
 const playSound = function (item) {
   const audio = new Audio(`sounds/${item.dataset.instrument}.mp3`);
